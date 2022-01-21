@@ -1,0 +1,9 @@
+#player {
+  color: red;
+}
+
+.title {
+  display: flex;
+  flex-flow: column;
+  padding: 10px 0;
+}
