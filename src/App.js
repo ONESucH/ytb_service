@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 let player;
+let timerNextVideo = 15;
 
 function App() {
-  const [ autoPlayMusic, setAutoPlayMusic ] = useState(0);
+  let [ timerFiveSecond, setTimerFiveSecond ] = useState(0);
+  let [ counterTimer, setCounterTimer ] = useState(0);
+  let [ autoPlayMusic, setAutoPlayMusic ] = useState(0);
   const [ counter, setCounter ] = useState(0);
   const [ videoData, setVideoData ] = useState(null);
   const [ idVideos ] = useState([
-    'mCIv0Kf37Ds', '60QQEpLrEDI', '40-z8RAT_Kg', 'SoodkS6WRhU', 'KNW7CtsJeBg', 'iRmJiBGiwS4'
+    'mCIv0Kf37Ds', 'LfYfJ6wFrLQ', 'Mb5ceHlRFcw', 'qJKu34SpfhU'
   ]);
 
   useEffect(() => {
@@ -16,10 +19,10 @@ function App() {
       player = new window.YT.Player('player', {
         width: 800,
         height: 550,
-        videoId: 'gNLzjWQdQgo',
+        videoId: '60QQEpLrEDI',
         autoplay: 1,
         playerVars: {
-          autoplay: 1,
+          autoplay: 0,
           disablekb: 1,
           rel: 1,
           showinfo: 1,
@@ -40,13 +43,32 @@ function App() {
     });
   }, [ window.YT ]);
 
+  useEffect(() => {
+    let interval = setTimeout(() => {
+
+      if (autoPlayMusic) {
+        setTimerFiveSecond(timerFiveSecond + 1);
+        setCounterTimer(counterTimer + 1);
+      }
+    }, 1000);
+  }, [ counterTimer ]);
+
+  useEffect(() => {
+    if (timerFiveSecond === timerNextVideo && autoPlayMusic) {
+      setTimerFiveSecond(1);
+      loadVideoById(idVideos[counter]);
+      setTimeout(() => {
+        player.seekTo(counterTimer);
+      }, 400);
+    }
+  }, [ timerFiveSecond ]);
+
   function onError(error) {
     console.log('Error', error);
   }
 
   function onApiChange(event) {
     console.log('API Change!');
-    // player.seekTo(0);
   }
 
   function onPlayerStateChange(event) {
@@ -65,7 +87,9 @@ function App() {
     player.loadVideoById(id);
 
     if (idVideos.length - 1 <= counter) {
+      setAutoPlayMusic(0);
       setCounter(0);
+      setCounterTimer(0);
     } else {
       setCounter(counter + 1);
     }
@@ -88,8 +112,17 @@ function App() {
   }
 
   function autoPlay() {
-    playVideo();
-    setAutoPlayMusic(1);
+    autoPlayMusic = !autoPlayMusic;
+
+    if (!autoPlayMusic) {
+      stopVideo();
+      setAutoPlayMusic(0);
+      setCounterTimer(0);
+    } else {
+      playVideo();
+      setAutoPlayMusic(autoPlayMusic ? 1 : 0);
+      setCounterTimer(counterTimer + 1);
+    }
   }
 
   return (
