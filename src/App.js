@@ -5,6 +5,7 @@ let player;
 let timerNextVideo = 15;
 
 function App() {
+  let [ loopLast, setLoopLast ] = useState(0);
   let [ timerFiveSecond, setTimerFiveSecond ] = useState(0);
   let [ counterTimer, setCounterTimer ] = useState(0);
   let [ autoPlayMusic, setAutoPlayMusic ] = useState(0);
@@ -86,8 +87,11 @@ function App() {
   function loadVideoById() {
     player.loadVideoById(idVideos[counter]);
 
+    if (idVideos.length - 1 === counter) {
+      setLoopLast(1);
+    }
+
     if (idVideos.length - 1 <= counter) {
-      setAutoPlayMusic(0);
       setCounter(0);
       setCounterTimer(0);
     } else {
@@ -122,27 +126,53 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <div className="title">
-        <span>{videoData?.video_id}</span>
-        <span>{videoData?.author}</span>
-        <span>{videoData?.title}</span>
-        <div className="controllers">
-          <button onClick={() => loadVideoById()} disabled={autoPlayMusic}>loadVideoById</button>
+    <div className="app" style={{
+      animationName: autoPlayMusic && !loopLast ? 'loop' : loopLast ? 'loopLast' : null,
+      animationIterationCount: autoPlayMusic && !loopLast ? 'infinite' : loopLast ? '1' : null,
+    }}>
+      <div className="app-wrapper">
+        <div className="title">
+          <span
+            className="text-dancer"
+            style={{
+              animationName: autoPlayMusic && !loopLast ? 'textDancer' : null,
+            }}
+          >{videoData?.video_id}</span>
+          <span
+            className="text-dancer"
+            style={{
+              animationName: autoPlayMusic && !loopLast ? 'textDancer' : null,
+            }}
+          >{videoData?.author}</span>
+          <span
+            className="text-dancer"
+            style={{
+              animationName: autoPlayMusic && !loopLast ? 'textDancer' : null,
+            }}
+          >{videoData?.title}</span>
+          <div className="controllers row center-sb">
+            <span
+              className="text-dancer"
+              style={{
+                animationName: autoPlayMusic && !loopLast ? 'textDancer' : null,
+              }}
+            >LoopLast {loopLast}</span>
+            <button onClick={() => loadVideoById()} disabled={autoPlayMusic}>loadVideoById</button>
+          </div>
         </div>
-      </div>
-      <div id="player" />
-      <div className="row controllers .center-sa">
-        <button onClick={() => playVideo()}>playVideo</button>
-        <button onClick={() => pauseVideo()}>pauseVideo</button>
-        <button onClick={() => stopVideo()}>stopVideo</button>
-      </div>
-      <div className="row center-sb">
-        <div className="controllers">
-          <button onClick={() => mute()}>Mute</button>
-          <button onClick={() => unmute()}>UnMute</button>
+        <div id="player" />
+        <div className="row controllers .center-sa">
+          <button onClick={() => playVideo()}>playVideo</button>
+          <button onClick={() => pauseVideo()}>pauseVideo</button>
+          <button onClick={() => stopVideo()}>stopVideo</button>
         </div>
-        <button className="autoplay" onClick={() => autoPlay()}>autoPlay {autoPlayMusic}</button>
+        <div className="row center-sb">
+          <div className="controllers">
+            <button onClick={() => mute()}>Mute</button>
+            <button onClick={() => unmute()}>UnMute</button>
+          </div>
+          <button className="autoplay" onClick={() => autoPlay()}>autoPlay {autoPlayMusic}</button>
+        </div>
       </div>
     </div>
   );
