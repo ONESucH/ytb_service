@@ -19,26 +19,3 @@ code {
   min-height: 100vh;
   align-items: center;
 }
-
-.controllers {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px 0;
-}
-
-button {
-  min-width: 100px;
-  padding: 5px 2px;
-  border-radius: 10px;
-  background: aqua;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  transition: .2s;
-}
-
-button:hover {
-  background: red;
-}

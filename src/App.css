@@ -2,8 +2,49 @@
   color: red;
 }
 
-.title {
+.row {
+  flex-flow: row nowrap;
+}
+
+.center-sb {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.center-sa {
+  align-items: center;
+  justify-content: space-around;
+}
+
+.title, .controllers, .row {
   display: flex;
+}
+
+.title {
   flex-flow: column;
   padding: 10px 0;
+}
+
+.controllers {
+  padding: 10px 0;
+}
+
+button {
+  min-width: 100px;
+  padding: 5px 2px;
+  border-radius: 10px;
+  background: aqua;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: .2s;
+  margin-right: 5px;
+}
+
+button:hover {
+  background: red;
+}
+
+.autoplay {
+
 }

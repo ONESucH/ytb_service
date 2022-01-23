@@ -11,7 +11,7 @@ function App() {
   const [ counter, setCounter ] = useState(0);
   const [ videoData, setVideoData ] = useState(null);
   const [ idVideos ] = useState([
-    'mCIv0Kf37Ds', 'LfYfJ6wFrLQ', 'Mb5ceHlRFcw', 'qJKu34SpfhU'
+    'mCIv0Kf37Ds', 'LfYfJ6wFrLQ', 'qJKu34SpfhU', 'Mb5ceHlRFcw', '4SBK_trh_S4', 'C4BvgtSskfk', 'f2cB_xGd6K4'
   ]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function App() {
         width: 800,
         height: 550,
         videoId: '60QQEpLrEDI',
-        autoplay: 1,
+        autoplay: 0,
         playerVars: {
           autoplay: 0,
           disablekb: 1,
@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     if (timerFiveSecond === timerNextVideo && autoPlayMusic) {
       setTimerFiveSecond(1);
-      loadVideoById(idVideos[counter]);
+      loadVideoById();
       setTimeout(() => {
         player.seekTo(counterTimer);
       }, 400);
@@ -83,8 +83,8 @@ function App() {
     player.playVideo();
   }
 
-  function loadVideoById(id) {
-    player.loadVideoById(id);
+  function loadVideoById() {
+    player.loadVideoById(idVideos[counter]);
 
     if (idVideos.length - 1 <= counter) {
       setAutoPlayMusic(0);
@@ -93,10 +93,6 @@ function App() {
     } else {
       setCounter(counter + 1);
     }
-  }
-
-  function nextVideo() {
-    player.nextVideo();
   }
 
   function mute() {
@@ -131,18 +127,23 @@ function App() {
         <span>{videoData?.video_id}</span>
         <span>{videoData?.author}</span>
         <span>{videoData?.title}</span>
+        <div className="controllers">
+          <button onClick={() => loadVideoById()} disabled={autoPlayMusic}>loadVideoById</button>
+        </div>
       </div>
       <div id="player" />
-      <div className="controllers">
+      <div className="row controllers .center-sa">
         <button onClick={() => playVideo()}>playVideo</button>
         <button onClick={() => pauseVideo()}>pauseVideo</button>
         <button onClick={() => stopVideo()}>stopVideo</button>
       </div>
-      <div onClick={() => loadVideoById(idVideos[counter])}>loadVideoById</div>
-      <div onClick={() => nextVideo()}>nextVideo</div>
-      <div onClick={() => mute()}>Mute</div>
-      <div onClick={() => unmute()}>UnMute</div>
-      <div onClick={() => autoPlay()}>autoPlay {autoPlayMusic}</div>
+      <div className="row center-sb">
+        <div className="controllers">
+          <button onClick={() => mute()}>Mute</button>
+          <button onClick={() => unmute()}>UnMute</button>
+        </div>
+        <button className="autoplay" onClick={() => autoPlay()}>autoPlay {autoPlayMusic}</button>
+      </div>
     </div>
   );
 }
