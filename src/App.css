@@ -74,19 +74,19 @@ button:hover {
 
 @keyframes textDancer {
   0% {
-    text-shadow: 0 0 15px #0000ff;
+    text-shadow: -15px 0 15px #0000ff;
   }
   25% {
     text-shadow: 0 10px 10px #fff282;
   }
   50% {
-    text-shadow: 10px 0 10px orange;
+    text-shadow: 10px -5px 10px orange;
   }
   75% {
-    text-shadow: 0 10px 10px #ff1c29;
+    text-shadow: -5px 10px 10px #ff1c29;
   }
   100% {
-    text-shadow: 10px 0 15px green;
+    text-shadow: -10px 0 15px green;
   }
 }
 
