@@ -1,1 +1,1 @@
-<h2><a href="/build">Demo</a> project</h2>
+<h2><a href="/build/index.html">Demo</a> project</h2>
